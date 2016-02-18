@@ -21,15 +21,15 @@ const char sbox_lookup_encrypt[256] = {
 
 const char sbox_lookup_decrypt[256] = {
 
+};
+
+void bytesub_encrypt(char *block, int count) {
+  while (count--) {
+	*block = sbox_lookup_encrypt[*block];
+	block++;
+  }
 }
 
-void bytesub_encrypt(char *block) {
-  int i;
-  char sub;
-  for (i = 0; i<BLOCK_SIZE; i++) 
-	block[i] = sbox_lookup_encrypt[block[i]);
-}
-
-int bytesub_decrypt(char *block) {
+void bytesub_decrypt(char *block, int count) {
   
 }

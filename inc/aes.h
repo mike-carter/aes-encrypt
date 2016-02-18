@@ -17,9 +17,9 @@
 typedef char block_t[BLOCK_SIZE];
 
 typedef enum {
-  key_16_byte,
-  key_24_byte,
-  key_32_byte
+  key_16_byte = 16,
+  key_24_byte = 24,
+  key_32_byte = 32
 } key_type_t;
 
 
