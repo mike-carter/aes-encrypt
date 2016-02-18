@@ -1,8 +1,10 @@
-IDIR =inc
 CC=gcc
-CFLAGS=-I$(IDIR)
 
-ODIR=bin
+INCDIR=inc
+OUTDIR=bin
+SRCDIR=src
+
+CFLAGS=-I$(IDIR)
 
 _DEPS = aes.h bytesub.h keyexpand.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
@@ -10,11 +12,15 @@ DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 _OBJ = bytesub.o keyexpand.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-$(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+MAIN=aes.c
+
+all: aes  
 
 aes: $(OBJ)
 	gcc -o $@ $^ $(CFLAGS)
+
+$(ODIR)/%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 .PHONY: clean
 
