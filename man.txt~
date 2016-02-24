@@ -1,0 +1,31 @@
+AES-ENCRYPT(1)
+
+NAME
+	aes-encrypt - encrypt files using AES algorithm
+
+SYNOPSIS
+	aes-encrypt [OPTION]... KEY FILE ...
+
+DESCRIPTION
+	
+
+OPTIONS
+	-d, --decrypt 
+		Restores files that have been encrypted
+
+	-k, --keep
+		Does not destroy original file after encryption
+
+	-f, --force
+		Change permissions to allow reading and-or writing if necessary.
+
+	-s=[16|24|32], --key-size=[16|24|32]
+		Specifies the size of the key in bytes. Default is 16 bytes.
+
+	-r, --random-key FILE
+		Generate a pseudo-random key to encrypt a file and store the key in the
+		location specified. Use with -s to specify the key size. 
+
+	-i, --input-key 
+		Uses a key provided through the command line instead of one stored in
+		a file. Submit the literal key instead of a file path.

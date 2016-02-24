@@ -1,28 +1,41 @@
+#
+# 'make depend'	uses makedepend to automatically generate dependencies
+# 
+# 'make'		build executable file 'aes-encrypt'
+# 'make clean'	removes all .o and executable files
+#
+
+# Defines the C Compiler used
 CC=gcc
 
-INCDIR=inc
-OUTDIR=bin
-SRCDIR=src
+# Defines any compile-time flags
+CFLAGS = -Wall -g
 
-CFLAGS=-I$(IDIR)
+# Define the .o output directory
+ODIR = bin
 
-_DEPS = aes.h bytesub.h keyexpand.h
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+# Define the source directory
+SDIR = src
 
-_OBJ = bytesub.o keyexpand.o 
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+# Defines the C source files
+SRCLIST = aes-encrypt.c
 
-MAIN=aes.c
+SRCS = $(patsubst %,$(SDIR)/%,$(SRCLIST))
+OBJS = $(patsubst %,$(ODIR)/%,$(SRCLIST:.c=.o))
 
-all: aes  
+# Defines the executable file
+MAIN = aes-encrypt
 
-aes: $(OBJ)
-	gcc -o $@ $^ $(CFLAGS)
+.PHONY: depend clean 
 
-$(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+all: $(MAIN)
+	@echo $(MAIN) has been compiled
 
-.PHONY: clean
+$(MAIN): $(OBJS)
+	$(CC) $(CFLAGS) -o $(MAIN) $(OBJS) 
+
+$(ODIR)/%.o: $(SDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ CC = gcc
+	$(RM) $(ODIR)/*.o *~ $(MAIN)

@@ -1,0 +1,100 @@
+/* 'aes-encrypt' file encryption program for GNU Linux
+
+   Copyright (C) 1985-2016 Free Software Foundation, Inc.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
+/**/
+#define PROGRAM_NAME "aes-encrypt"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <getopt.h>
+
+#include "keydefs.h"
+
+struct Options
+{
+  bool decrypt; /* -d flag: decrypt file */
+  bool force;   /* -f flag: chmod files if necessary */
+  bool generate_rand_key;
+  bool keep_file;
+};
+
+static struct option const long_opts[] =
+{
+  {"decrypt", no_argument, NULL, 'd'},
+  {"force", no_argument, NULL, 'f'},
+  {"input-key", required_argument, NULL, 'i'},
+  {"keep-file", no_argument, NULL, 'k'},
+  {"random-key", optional_argument, NULL, 'r'},
+  {"key-size", required_argument, NULL, 's'},
+  {0, 0, 0, 0}
+};
+
+int
+main(int argc, char *argv[])
+{
+  struct Options flags; 
+  int opt;
+  key_size_t key_size;
+  char *key_file_name;
+  char *key;
+  
+  /* Parse command options */
+  while ((opt = getopt_long(argc, argv, "dfi:kr::s:", long_opts, NULL)) != -1)
+	{
+	  switch (opt)
+		{
+		case 'd':
+		  flags.decrypt = true;
+		  
+		case 'f':
+		  flags.force = true;
+		  break;
+		  
+		case 'i':
+		  key = optarg;
+		  break;
+		  
+		case 'k':
+		  flags.keep_file = true;
+		  break;
+		  
+		case 'r':
+		  flags.generate_rand_key = true;
+		  key_file_name = optarg;
+		  if (key_file_name == 0)
+			key_file_name = "key";
+		  break;
+		  
+		case 's':
+		  key_size = atoi(optarg);
+		  if (key_size != key_16_bytes &&
+			  key_size != key_24_bytes &&
+			  key_size != key_32_bytes)
+			{
+			  printf("%s -s: Invalid or no key size specified\n",
+					 PROGRAM_NAME);
+			  exit(EXIT_FAILURE);
+			}
+		  break;
+
+		default:
+		  break;
+		}
+	}
+  exit(EXIT_SUCCESS);
+}
