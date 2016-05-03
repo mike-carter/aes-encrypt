@@ -18,21 +18,29 @@ ODIR = bin
 SDIR = src
 
 # Defines the C source files
-SRCLIST = aes-encrypt.c
+ESRCLIST = aes-encrypt.c base64.c bytesub.c keyexpand.c gf.c
+DSRCLIST = aes-decrypt.c base64.c bytesub.c keyexpand.c gf.c
 
-SRCS = $(patsubst %,$(SDIR)/%,$(SRCLIST))
-OBJS = $(patsubst %,$(ODIR)/%,$(SRCLIST:.c=.o))
+ESRCS = $(patsubst %,$(SDIR)/%,$(ESRCLIST))
+DSRCS = $(patsubst %,$(SDIR)/%,$(DSRCLIST))
 
-# Defines the executable file
-MAIN = aes-encrypt
+EOBJS = $(patsubst %,$(ODIR)/%,$(ESRCLIST:.c=.o))
+DOBJS = $(patsubst %,$(ODIR)/%,$(DSRCLIST:.c=.o))
+
+# Defines the executable files
+AESE = aes-encrypt
+AESD = aes-decrypt
 
 .PHONY: depend clean 
 
-all: $(MAIN)
-	@echo $(MAIN) has been compiled
+all: $(AESE) $(AESD)
+	@echo $(AESE), $(AESD) have been compiled
 
-$(MAIN): $(OBJS)
-	$(CC) $(CFLAGS) -o $(MAIN) $(OBJS) 
+$(AESE): $(EOBJS)
+	$(CC) $(CFLAGS) -o $(AESE) $(EOBJS)
+
+$(AESD): $(DOBJS)
+	$(CC) $(CFLAGS) -o $(AESD) $(DOBJS) 
 
 $(ODIR)/%.o: $(SDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@

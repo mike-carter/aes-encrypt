@@ -1,0 +1,4 @@
+bin/
+src/*~
+aes-encrypt
+aes-decrypt
