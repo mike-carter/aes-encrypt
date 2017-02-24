@@ -9,6 +9,8 @@
 #ifndef _AES_H_
 #define _AES_H_
 
+#include <stdint.h>
+
 /* Number of bytes in an encryption block */
 #define AES_BLOCK_SIZE 16
 
@@ -27,6 +29,12 @@ I made these macros to assist in making terminal output look a little cleaner.
 #define exit_error(...) fprintf(stderr, __VA_ARGS__ ); exit(EXIT_FAILURE)
 
 /* Type Definitions: */
+
+typedef union {
+  uint8_t byte[4];
+  uint32_t word;
+} word32_t;
+
 
 /**
  * Key size options

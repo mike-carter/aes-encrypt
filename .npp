@@ -1,0 +1,31 @@
+<NotepadPlus>
+    <Project name="maes">
+        <Folder name="doc">
+            <File name="doc\aes-encrypt.1" />
+            <File name="doc\man.txt" />
+        </Folder>
+        <Folder name="src">
+            <File name="src\aes-decrypt.c" />
+            <File name="src\aes-encrypt.c" />
+            <File name="src\aes.h" />
+            <File name="src\base64.c" />
+            <File name="src\bytesub.c" />
+            <File name="src\gf.c" />
+            <File name="src\keyexpand.c" />
+            <File name="src\maes.c" />
+            <File name="src\aes-file.c" />
+            <File name="src\maes.h" />
+            <File name="src\aes-file.h" />
+            <File name="src\sha256.c" />
+            <File name="src\sha256.h" />
+            <File name="src\word32.h" />
+            <File name="src\error.c" />
+            <File name="src\error.h" />
+            <File name="src\messages.h" />
+        </Folder>
+        <File name=".gitignore" />
+        <File name="LICENSE" />
+        <File name="Makefile" />
+        <File name="README.md" />
+    </Project>
+</NotepadPlus>
